@@ -19,7 +19,8 @@ router.get('/user/signup', function(req, res, next){
 });
 
 router.get('/user/signin', function(req, res, next){
-  res.render('user/sign-in.hbs')
+  var messages = req.flash('error')
+  res.render('user/sign-in.hbs', {csrfToken: req.csrfToken(), messages: messages, hasError: messages.length > 0})
 });
 
 router.post('/user/signup', passport.authenticate('local.signup', {
@@ -28,10 +29,16 @@ router.post('/user/signup', passport.authenticate('local.signup', {
   failureFlash: true
 }));
 
+router.post('/user/signin', passport.authenticate('local.signin', {
+  successRedirect: '/user/profile',
+  failureRedirect: '/user/signin',
+  failureFlash: true
+}))
+
 router.get('/user/profile', function(req, res, next){
   res.render('user/profile.hbs')
 })
-/*
+/* this is going to be an admin controls rout
 router.get('/user/admin', function(req, res, next){
   if(User.admin !== "on"){
      res.json("Authorization Error, Only Administrator user can access this route.")
