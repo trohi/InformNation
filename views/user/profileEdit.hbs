@@ -15,7 +15,6 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="/user/profile">Profile</a>
-          <a class="dropdown-item" href="/user/logout">Logout</a>
         </div>
       </li>
     </ul>
@@ -26,6 +25,38 @@
   </div>
 </nav>
 
-<div class="container">
-    <h3>Welcome to administrator's profile page.</h3>
-</div>
+
+<div  id="form">
+    {{#if hasError}}
+        <div class="alert alert-danger mb-n5" style="width: 40%; margin:auto">
+            {{#each messages}}
+                <p  style="margin-left: 35%; font-size:18px;">{{this}}</p>
+             {{/each}}
+        </div>
+    {{/if}}
+<form class="form rounded-lg" action="/user/signup" method="POST" autocomplete="off">
+    <div class="form-group">
+        <label>Email</label>
+        <input type="text" class="form-control" name="email" value="{{user.email}}">
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="form-control" name="password" value="{{user.password}}">
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+        <label>Mobile</label>
+        <input type="text" class="form-control" name="mobile" value="{{user.mobile}}">
+        </div>
+         <div class="form-group col-md-6">
+        <label>City</label>
+        <input type="text" class="form-control" name="city" value="{{user.city}}">
+    </div>
+    </div>
+
+    <div class="form-row">
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}"> 
+        <button type="submit" class="btn btn-info" value="{{ edit }}"><i class="fa fa-database mr-1"></i> Save</button>
+    </div>
+</form>
+</div>  

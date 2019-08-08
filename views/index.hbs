@@ -7,15 +7,25 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#"><i class="fa fa-home" style="font-size: 1.2em"></i> Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/"><i class="fa fa-home" style="font-size: 1.2em"></i> Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fa fa-user ml-1" id="userIcon" style="font-size: 1.2em;"></i> User
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <!--OVDJE UBACITI LOGIKU ZA PRIKAZ DROPDOWN-A(DALI JE USER LOGED IN(ILI JE ADMIN))-->
+        {{#if login}}
+         {{#if user.admin}}
+          <a class="dropdown-item" href="/user/admin">Profile</a>
+          {{else}}
+          <a class="dropdown-item" href="/user/profile">Profile</a>
+          {{/if}}
+          <a class="dropdown-item" href="/user/logout">Logout</a>
+        {{else}}
           <a class="dropdown-item" href="/user/signup">Signup</a>
           <a class="dropdown-item" href="/user/signin">Signin</a>
+         {{/if}}
         </div>
       </li>
     </ul>
@@ -25,7 +35,6 @@
     </form>
   </div>
 </nav>
-
 <div class="container">
     <div class="row" id="title1"> 
         <h2>Welcom to no.1 article Website</h2>
