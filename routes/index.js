@@ -1,18 +1,15 @@
 var express = require('express');
 var router = express.Router();
-var csrf = require('csurf');
-var passport = require('passport');
 var User = require('../user model/user');
 
 
-var csrfProtection = csrf();
 
-router.use(csrfProtection)
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Inform-nation' });
 });
 
+<<<<<<< HEAD
 router.get('/user/signup', function(req, res, next){
   var messages = req.flash('error')
   res.render('user/sign-up.hbs', {csrfToken: req.csrfToken(), messages: messages, hasError: messages.length > 0})
@@ -47,5 +44,7 @@ router.get('/user/admin', function(req, res, next){
   }
 });
 */
+=======
+>>>>>>> mybranch
 
 module.exports = router;
