@@ -4,7 +4,6 @@ var csrf = require('csurf');
 var passport = require('passport');
 var User = require('../user model/user');
 
-require("../controler/userControler");
 
 var csrfProtection = csrf();
 router.use(csrfProtection)
@@ -23,18 +22,16 @@ router.get('/admin', isLoggedIn, function (req, res, next){
     res.redirect('/')
   }
 });
-/* Pokusaj kreiranja rute za editovanje profile krisnika ali bezuspjesno
+
 router.get('/edit', isLoggedIn, function(req, res, next){
   var messages = req.flash('error')
-  editProfile()
   res.render('user/profileEdit.hbs',{csrfToken: req.csrfToken(), messages: messages, hasError: messages.length > 0})
 });
 
 router.post('/edit', function(req, res, next){
-  editProfile()
-  res.redirect('/profile')
+ updateRecord(req, res)
 })
-*/
+
 router.get('/logout', isLoggedIn, function(req, res, next){
   req.logout();
   res.redirect('/');
@@ -87,27 +84,38 @@ function notLoggedIn(req, res, next){
   res.redirect('/')
 };
 
-/* helper function(profile edit)
-var editProfile = function(){
-User.updateUser(User.email, 
+/*
+var editProfile = User.findOneAndUpdate({"email":req.user.email}, 
       {
-          "email": req.body.email,
-          "password": req.body.password,
-          "city": req.body.city,
-          "mobile": req.body.mobile
-      }, function(err, data){
+          "email": res.user.email,
+          "password": res.user.password,
+          "city": res.user.city,
+          "mobile": res.user.mobile
+      },{new:true}, function(err, data){
           if(err){
               return ("error during editing :" + err)
           } if(data){
               return data;
           }
       })
-    }
-*/
+      */
+    
 
 
-  /* NACIN ZA PRISTUPIT MONGODB PROPERTY-U TRENUTNOG USERA
+
+  /* NACIN ZA PRISTUPIT MONGODB 
   User.find({"admin":"on"}, function(err, user){
   console.log(user)
 })
 */
+
+function updateRecord(req, res){
+ User.findOneAndUpdate({"email": req.user.email}, req.body, {new:true}, function(err, doc){
+   if(!err){
+     res.redirect("/user/profile")
+   }
+   else{
+     console.log("error during edit "+ err)
+   }
+ })
+}

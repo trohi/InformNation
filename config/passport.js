@@ -52,19 +52,11 @@ passport.use('local.signup', new LocalStrategy({
     )
 }));
 
-<<<<<<< HEAD
-=======
-
->>>>>>> mybranch
 passport.use('local.signin', new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',
     passReqToCallback: true
-<<<<<<< HEAD
-},function(req, email, password, done){
-=======
 }, function(req, email, password, done){
->>>>>>> mybranch
     req.checkBody('email', 'Invalid email.').notEmpty().isEmail();
     req.checkBody('password', 'Invalid password.').notEmpty();
     var errors = req.validationErrors();
@@ -72,31 +64,14 @@ passport.use('local.signin', new LocalStrategy({
         var messages = [];     
         errors.forEach(function(error){
             messages.push(error.msg)
-<<<<<<< HEAD
-        })
-        return done(null, false, req.flash('error', messages))
-    }  
-        User.findOne({'email': email}, function(err, user){
-=======
         });
         return done(null, false, req.flash('error', messages))
     }
          User.findOne({'email': email}, function(err, user){
->>>>>>> mybranch
         if(err){
             return done(err)
         }
         if(!user){
-<<<<<<< HEAD
-            return done(null, false, {message: 'There is no registered account with that email'})
-       }
-        if(!user.validPassword(password)){
-            return done(null, false, {message: "Wrong password"})
-        }
-        return done(null, user);
-    })
-}));
-=======
             return done(null, false, {message: 'No user found with that email adress'})
         }
         if(!user.validPassword(password)){
@@ -106,4 +81,3 @@ passport.use('local.signin', new LocalStrategy({
         }
     )
 }))
->>>>>>> mybranch
