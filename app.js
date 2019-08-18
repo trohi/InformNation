@@ -18,6 +18,7 @@ var app = express();
 
 mongoose.connect('mongodb://localhost:27017/library', {useNewUrlParser: true})
 require('./config/passport');
+mongoose.set("useFindAndModify", false);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
