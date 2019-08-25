@@ -2,12 +2,24 @@ var express = require('express');
 var router = express.Router();
 var csrf = require('csurf');
 var passport = require('passport');
-var User = require('../user model/user');
+var User = require('../models/user');
+var bcryp = require("bcrypt-nodejs");
+var Article = require('../models/article');
+
 
 
 var csrfProtection = csrf();
 router.use(csrfProtection)
 
+router.get('/publish', isLoggedIn, function(req, res, next){
+  var messages = req.flash('error')
+  res.render('article/content.hbs',{csrfToken: req.csrfToken(), messages: messages, hasError: messages.length > 0})
+})
+
+router.post('/publish', function(req, res, next){
+publish(req, res);
+res.redirect('/')
+})
 
 router.get('/profile', isLoggedIn, function(req, res, next){
   res.render('user/profile.hbs')
@@ -30,7 +42,7 @@ router.get('/edit', isLoggedIn, function(req, res, next){
 
 router.post('/edit', function(req, res, next){
  updateRecord(req, res)
-})
+});
 
 router.get('/logout', isLoggedIn, function(req, res, next){
   req.logout();
@@ -38,6 +50,7 @@ router.get('/logout', isLoggedIn, function(req, res, next){
 });
 
 router.use('/', notLoggedIn, function(req, res, next){
+  storyFinding(req, res)
   next()
 });
 
@@ -84,38 +97,50 @@ function notLoggedIn(req, res, next){
   res.redirect('/')
 };
 
-/*
-var editProfile = User.findOneAndUpdate({"email":req.user.email}, 
-      {
-          "email": res.user.email,
-          "password": res.user.password,
-          "city": res.user.city,
-          "mobile": res.user.mobile
-      },{new:true}, function(err, data){
-          if(err){
-              return ("error during editing :" + err)
-          } if(data){
-              return data;
-          }
-      })
-      */
-    
 
-
-
-  /* NACIN ZA PRISTUPIT MONGODB 
-  User.find({"admin":"on"}, function(err, user){
-  console.log(user)
-})
-*/
 
 function updateRecord(req, res){
- User.findOneAndUpdate({"email": req.user.email}, req.body, {new:true}, function(err, doc){
-   if(!err){
-     res.redirect("/user/profile")
-   }
-   else{
-     console.log("error during edit "+ err)
-   }
- })
-}
+  User.findOneAndUpdate({"email": req.user.email}, 
+  {
+  "email":req.body.email, 
+  "password": bcryp.hashSync(req.body.password, bcryp.genSaltSync(5)),
+  "city":req.body.city, 
+  "mobile":req.body.mobile
+  }, 
+  {new:true}, 
+  function(err, doc){
+    if(!err){
+      res.redirect("/user/profile")
+    }
+    else{
+      console.log("error during edit "+ err)
+    }
+  })
+ };
+
+ var publish= function(req, res){
+  var data = new Article({
+    author: req.body.author,
+    publicationDate: req.body.date,
+    title: req.body.title,
+    content: req.body.content
+  })
+  data.save( function(err, result){
+    if(err){
+      return req.flash('error');
+    } if(result){
+      return result
+    }
+  });
+ };
+
+ var storyFinding =function(req, res){
+    Article.find(function(err, doc){
+      if(err){
+        console.log("No content found" + err)
+      } 
+      if(doc){
+        return doc
+      }
+    })
+ }

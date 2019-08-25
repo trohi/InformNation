@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color:black;">
+  <h2 class="navbar-brand"  style="color:orange"><i class="fa fa-ravelry"></i> Infrom-nation</h2>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/"  style="color:orange"><i class="fa fa-home" style="font-size: 1.2em; color:orange"></i> Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle"  style="color:orange" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-user ml-1" id="userIcon" style="font-size: 1.2em;"></i> User
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        {{#if login}}
+         {{#if user.admin}}
+          <a class="dropdown-item" href="/user/admin">Profile</a>
+          {{else}}
+          <a class="dropdown-item" href="/user/profile">Profile</a>
+          {{/if}}
+          <a class="dropdown-item" href="/user/logout">Logout</a>
+        {{else}}
+          <a class="dropdown-item" href="/user/signup">Signup</a>
+          <a class="dropdown-item" href="/user/signin">Signin</a>
+         {{/if}}
+        </div>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="outline-color:orange">
+      <button class="btn btn-warning my-2 my-sm-0" style="color:black;"  type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+<div class="jumbotron  mt-1 pt-4" style="background-color: black; color:orange; height:100%; margin-bottom:0; border-radius:2%; margin-right:5px; margin-left:5px;"> 
+    <form style="display:grid" action="/user/publish" method="POST">
+        <label style="color:orange">Author</label>
+            <input style="width:15%" type="text" value="{{user.email}}" name="author">
+        <label style="color:orange" class="mt-3">Date</label>
+            <input style="width:15%" type="text" value="{{date}}" name="date">
+        <label style="margin-left:auto; margin-right:auto" class="mt-n4"><h2>Title</h2></label>
+            <input style="width:20%; margin-left:auto; margin-right:auto; font-size:20px; text-align:center" type="text" name="title">    
+        <label class="mt-3" style="margin-left:auto; margin-right:auto;"><h3>Your Story</h3></label>
+            <textarea cols="40" rows="10" style="width:80%; content-align:center;margin-left:auto; margin-right:auto; border-radius:2%" name="content"></textarea>
+              <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+        <button class="btn ml-auto mr-auto mt-3" type="submit" style="background-color: orange; width:75px;">Publish</button>
+    </form>
+</div>

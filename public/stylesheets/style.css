@@ -8,10 +8,6 @@ a {
   color: #00B7FF;
 }
 
-nav{
-  margin-top: 5px;
-}
-
 .navbar-brand{
   font: 20px "sans-serif";
   font-weight: bold;
@@ -19,13 +15,14 @@ nav{
 }
 
 .form{
+  color:orange;
   font-weight: bold;
   width:40%;
   justify-content: center;
   margin: auto;
   padding: auto;
   height: 40%;
-  background-color: rgb(153, 218, 34);
+  background-color: black;
   margin-top: 50px;
   padding-top: 20px;
   padding-bottom: 10px;
@@ -41,12 +38,4 @@ nav{
   justify-content: center;
   margin-top: 55px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
-}
-
-.container{
-  margin-top: 55px;
-  background-color: rgb(153, 218, 34);
-  border-style: groove;
-  border-color: black ;
-  height: 100vh;
 }

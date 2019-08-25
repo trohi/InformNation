@@ -1,5 +1,5 @@
 var passport = require('passport');
-var User = require('../user model/user');
+var User = require('../models/user');
 var LocalStrategy = require('passport-local').Strategy;
 
 passport.serializeUser(function(user, done){
@@ -80,4 +80,4 @@ passport.use('local.signin', new LocalStrategy({
         return done(null, user)
         }
     )
-}))
+}));

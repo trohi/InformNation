@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-secondary">
-  <h2 class="navbar-brand" style="color:rgb(153, 218, 34);"><i class="fa fa-ravelry"></i> Infrom-nation</h2>
+<nav class="navbar navbar-expand-lg navbar-light"  style="background-color:black">
+  <h2 class="navbar-brand"  style="color:orange"><i class="fa fa-ravelry"></i> Infrom-nation</h2>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -7,14 +7,13 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="/"><i class="fa fa-home" style="font-size: 1.2em"></i> Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" style="color:orange"href="/"><i class="fa fa-home" style="font-size: 1.2em; color:orange"></i> Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fa fa-user ml-1" id="userIcon" style="font-size: 1.2em;"></i> User
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:orange">
+        <i class="fa fa-user ml-1" id="userIcon" style="font-size: 1.2em; color:orange"></i> User
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <!--OVDJE UBACITI LOGIKU ZA PRIKAZ DROPDOWN-A(DALI JE USER LOGED IN(ILI JE ADMIN))-->
         {{#if login}}
          {{#if user.admin}}
           <a class="dropdown-item" href="/user/admin">Profile</a>
@@ -30,21 +29,31 @@
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="outline-color:orange">
+      <button class="btn btn-warning my-2 my-sm-0" style="color:black; background-color:orange"  type="submit">Search</button>
     </form>
   </div>
 </nav>
-<div class="container">
-    <div class="row" id="title1"> 
-        <h2>Welcom to no.1 article Website</h2>
-    </div>
-    <div class="row ml-3">
-        <h5>First article's title</h5> 
-        <br>
 
-    </div>
-        <div class="row ml-3">
-        <p>Some Dummy Text.</p>
-        </div>
+<div style="margin-top: 20px; text-align:center;  " >
+<h3 style="font-family:'Times New Roman', Times, serif ;color:black; font-size:60px">INFORM-NATION</h3>
+<p style="font-family:'Times New Roman', Times, serif; font-size:20px">Welcome to our humble site, here you can write your story, or read others, it doesnt metter until we all feel informed.</p>
+</div>
+
+<div class="container" id="index-cont" style="color:papayawhip; background-color:black; border-radius:2%">
+  
+   <h5>{{ article.author }}</h5>
+   {{#each article}}
+   <div class="container pt-1">
+    <div class="col mt-5">
+  <h2 style="margin-right:auto; text-align:center; color:orange">{{ this.title }}</h2>
+  <p style="color:orange;">Date: {{ this.publicationDate }}</p>
+  <p style="color:orange;">Author: {{ this.author }}</p>
+  </div>
+  <div class="col">
+    {{ this.content }}
+  </div>
+  <hr>
+  </div>
+   {{/each}}
 </div>

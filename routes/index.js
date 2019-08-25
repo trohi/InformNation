@@ -1,12 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../user model/user');
-
+var Article = require('../models/article');
 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Inform-nation' });
+  Article.find(function(err, doc){
+    res.render('index', { title: 'Inform-nation', article: doc });
+  });
 });
 
 
