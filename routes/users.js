@@ -2,14 +2,24 @@ var express = require('express');
 var router = express.Router();
 var csrf = require('csurf');
 var passport = require('passport');
-var User = require('../user model/user');
+var User = require('../models/user');
 var bcryp = require("bcrypt-nodejs");
+var Article = require('../models/article');
 
 
 
 var csrfProtection = csrf();
 router.use(csrfProtection)
 
+router.get('/publish', isLoggedIn, function(req, res, next){
+  var messages = req.flash('error')
+  res.render('article/content.hbs',{csrfToken: req.csrfToken(), messages: messages, hasError: messages.length > 0})
+})
+
+router.post('/publish', function(req, res, next){
+publish(req, res);
+res.redirect('/')
+})
 
 router.get('/profile', isLoggedIn, function(req, res, next){
   res.render('user/profile.hbs')
@@ -40,6 +50,7 @@ router.get('/logout', isLoggedIn, function(req, res, next){
 });
 
 router.use('/', notLoggedIn, function(req, res, next){
+  storyFinding(req, res)
   next()
 });
 
@@ -87,12 +98,6 @@ function notLoggedIn(req, res, next){
 };
 
 
-  /* NACIN ZA PRISTUPIT MONGODB PROPERTY-U TRENUTNOG USERA
-  User.find({"admin":"on"}, function(err, user){
-  console.log(user)
-})
-*/
-
 
 function updateRecord(req, res){
   User.findOneAndUpdate({"email": req.user.email}, 
@@ -112,3 +117,30 @@ function updateRecord(req, res){
     }
   })
  };
+
+ var publish= function(req, res){
+  var data = new Article({
+    author: req.body.author,
+    publicationDate: req.body.date,
+    title: req.body.title,
+    content: req.body.content
+  })
+  data.save( function(err, result){
+    if(err){
+      return req.flash('error');
+    } if(result){
+      return result
+    }
+  });
+ };
+
+ var storyFinding =function(req, res){
+    Article.find(function(err, doc){
+      if(err){
+        console.log("No content found" + err)
+      } 
+      if(doc){
+        return doc
+      }
+    })
+ }

@@ -9,6 +9,7 @@ var session = require('express-session');
 var passport = require('passport');
 var flash = require('connect-flash');
 var validator = require('express-validator');
+var Article = require('./models/article');
 
 
 var indexRouter = require('./routes/index');
@@ -18,6 +19,7 @@ var app = express();
 
 mongoose.connect('mongodb://localhost:27017/library', {useNewUrlParser: true})
 require('./config/passport');
+
 mongoose.set("useFindAndModify", false);
 
 // view engine setup
@@ -46,6 +48,12 @@ app.use(function(req, res, next){
   res.locals.user = req.user;
   next()
 })
+
+app.use(function(req, res, next){
+  res.locals.date = new Date();
+  next()
+})
+
 
 
 app.use('/user', usersRouter);
