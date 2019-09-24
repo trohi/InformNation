@@ -14,7 +14,7 @@
         <i class="fa fa-user ml-1" id="userIcon" style="font-size: 1.2em; color:orange"></i> User
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/user/profile">Profile</a>
+          <a class="dropdown-item" href="/">Home</a>
           <a class="dropdown-item" href="/user/logout">Logout</a>
         </div>
       </li>
@@ -26,21 +26,38 @@
   </div>
 </nav>
 
-<div class="container">
-  <div class="row mt-3" style="background-color: black"> 
-    <h3 class="welcome ml-auto mr-auto" style="color:orange">Welcome to administrator's profile page.</h3>
-  </div>
-  <div class="row" style="display:block">
-    <div class="col-lg-4 col-md-3 col-sm-2">
-    <form style="display:block;background-color:black; color:orange; margin-top:30px;"> 
-      <lable>Dummby label</lable>
-      <input placeholder="Some text">
-      <br>
-      <lable>Dummby label</lable>
-      <input placeholder="Some text">
-      <label style="display: block; margin:auto;">Click here to submit changes</label>
-      <button style="display: block;">Click me</button>
-    </form>
-  </div>
-  </div>
+<div class="container" style="background-color:black; margin-top:10px; margin-bottom:10px; color:orange; text-align:center; border-radius:2%; width:40%">
+    <h3 class="welcome pt-3">Hello {{user.email}}.</h3>
+    <h3 class="wlcm pt-2">Welcome to your profile page.</h3>
+    <h3 class="pt-5">You are an administrator of this website.</h3>
+    <br>
+    <label class="pt-2 pb-2"> click here if you want to publish your</label>
+    <a type="button" href="/user/publish" style="font-size:20px;">story</a>
 </div>
+
+ {{#each unApproved}}
+<div class="container" id="approval" style="color:papayawhip; background-color:black; border-radius:2%; padding-bottom:20px; ;margin-bottom:30px">
+  
+ <form action="/user/admin" method="POST">
+    <div class="col mt-5">
+  <h2 style="margin-right:auto; text-align:center; color:orange; padding-top:5%;">{{ this.title }}</h2>
+  <p style="color:orange;">Author: {{ this.author }}</p>
+  <p style="color:orange;">Date: {{ this.publicationDate }}</p>
+  <input style="color:orange;" type="hidden" name="id" value="{{ this.id }}">
+  </div>
+  <div class="col pb-5">
+    {{ this.content }}
+  </div>
+ 
+  <hr>
+ <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+ <div id="x" onclick="clickedElement(event)" >
+
+  <button id="dis" class="btn mr-1 ml-2 mt-n5"  type="submit" style="float:left; background-color:orange;">Disapprove</button> 
+  <button id="approve" class="btn mr-1 ml-2 mt-n5"  type="submit" style="float:right; background-color:orange; color:black">Approve</button> 
+
+</div>
+</form> 
+</div>
+  
+  {{/each}}

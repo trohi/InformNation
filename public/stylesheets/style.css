@@ -39,3 +39,11 @@ a {
   margin-top: 55px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
 }
+
+#bgg{
+background-image: url("https://i.pinimg.com/originals/dd/02/04/dd020430a147e6f5734391e087529d9b.jpg");
+background-size: cover;
+background-repeat: repeat;
+height: 110vh;
+margin-top: -130px;
+}

@@ -1,8 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light"  style="background-color:black">
-  <h2 class="navbar-brand"  style="color:orange"><i class="fa fa-ravelry"></i> Infrom-nation</h2>
+  <h2 class="navbar-brand" style="color:orange"><i class="fa fa-ravelry"></i> Infrom-nation</h2>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
+
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
@@ -40,11 +41,10 @@
 <p style="font-family:'Times New Roman', Times, serif; font-size:20px">Welcome to our humble site, here you can write your story, or read others, it doesnt metter until we all feel informed.</p>
 </div>
 
-<div class="container" id="index-cont" style="color:papayawhip; background-color:black; border-radius:2%">
-  
-   <h5>{{ article.author }}</h5>
-   {{#each article}}
-   <div class="container pt-1">
+<div class="container" id="index-cont" style="color:papayawhip; background-color:black; border-radius:2%; padding-bottom:20px; ;margin-bottom:30px">
+ 
+   {{#each approved}} 
+   <div class="container pt-2">
     <div class="col mt-5">
   <h2 style="margin-right:auto; text-align:center; color:orange">{{ this.title }}</h2>
   <p style="color:orange;">Date: {{ this.publicationDate }}</p>
@@ -53,6 +53,7 @@
   <div class="col">
     {{ this.content }}
   </div>
+ 
   <hr>
   </div>
    {{/each}}
