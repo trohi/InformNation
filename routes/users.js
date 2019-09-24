@@ -5,52 +5,71 @@ var passport = require('passport');
 var User = require('../models/user');
 var bcryp = require("bcrypt-nodejs");
 var Article = require('../models/article');
+var path = require('path');
+var controller = require('../models/controller');
 
+router.use(express.static(path.join(__dirname +'/public')));
+
+
+router.get('/admin', controller.isLoggedIn, function (req, res, next){
+  Article.find({"isApproved":false}, function(err, result){
+  if(req.user.admin == "on"){
+  res.render('user/adminProfile.hbs', {unApproved:result})
+  } else {
+    res.redirect('/')
+  }
+})
+});
+
+
+router.post('/admin',function(req, res, next){
+  
+  if(controller.value === 1){
+    controller.approval(req, res, next)
+  }
+  if(controller.value === 2){
+    controller.deleteArticle(req, res, next)
+  }
+  console.log(controller.value)
+res.redirect('/');
+})
 
 
 var csrfProtection = csrf();
 router.use(csrfProtection)
 
-router.get('/publish', isLoggedIn, function(req, res, next){
+
+router.get('/publish', controller.isLoggedIn, function(req, res, next){
   var messages = req.flash('error')
   res.render('article/content.hbs',{csrfToken: req.csrfToken(), messages: messages, hasError: messages.length > 0})
 })
 
 router.post('/publish', function(req, res, next){
-publish(req, res);
-res.redirect('/')
+  controller.publish(req, res);
+  res.redirect('/')
 })
 
-router.get('/profile', isLoggedIn, function(req, res, next){
+router.get('/profile', controller.isLoggedIn, function(req, res, next){
   res.render('user/profile.hbs')
 });
 
 
-
-router.get('/admin', isLoggedIn, function (req, res, next){
-  if(req.user.admin == "on"){
-    res.render('user/adminProfile.hbs')
-  } else {
-    res.redirect('/')
-  }
-});
-
-router.get('/edit', isLoggedIn, function(req, res, next){
+router.get('/edit', controller.isLoggedIn, function(req, res, next){
   var messages = req.flash('error')
   res.render('user/profileEdit.hbs',{csrfToken: req.csrfToken(), messages: messages, hasError: messages.length > 0})
 });
 
 router.post('/edit', function(req, res, next){
- updateRecord(req, res)
+  controller.updateRecord(req, res)
 });
 
-router.get('/logout', isLoggedIn, function(req, res, next){
+router.get('/logout', controller.isLoggedIn, function(req, res, next){
   req.logout();
   res.redirect('/');
 });
 
-router.use('/', notLoggedIn, function(req, res, next){
-  storyFinding(req, res)
+router.use('/', controller.notLoggedIn, function(req, res, next){
+  
   next()
 });
 
@@ -81,66 +100,5 @@ router.post('/signin', passport.authenticate('local.signin', {
 }));
 
 
+
 module.exports = router;
-
-function isLoggedIn(req, res, next){
-  if(req.isAuthenticated()){
-    return next()
-  }
-  res.redirect('/')
-};
-
-function notLoggedIn(req, res, next){
-  if(!req.isAuthenticated()){
-    return next()
-  }
-  res.redirect('/')
-};
-
-
-
-function updateRecord(req, res){
-  User.findOneAndUpdate({"email": req.user.email}, 
-  {
-  "email":req.body.email, 
-  "password": bcryp.hashSync(req.body.password, bcryp.genSaltSync(5)),
-  "city":req.body.city, 
-  "mobile":req.body.mobile
-  }, 
-  {new:true}, 
-  function(err, doc){
-    if(!err){
-      res.redirect("/user/profile")
-    }
-    else{
-      console.log("error during edit "+ err)
-    }
-  })
- };
-
- var publish= function(req, res){
-  var data = new Article({
-    author: req.body.author,
-    publicationDate: req.body.date,
-    title: req.body.title,
-    content: req.body.content
-  })
-  data.save( function(err, result){
-    if(err){
-      return req.flash('error');
-    } if(result){
-      return result
-    }
-  });
- };
-
- var storyFinding =function(req, res){
-    Article.find(function(err, doc){
-      if(err){
-        console.log("No content found" + err)
-      } 
-      if(doc){
-        return doc
-      }
-    })
- }

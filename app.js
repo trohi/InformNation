@@ -12,6 +12,7 @@ var validator = require('express-validator');
 var Article = require('./models/article');
 
 
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -74,5 +75,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;
