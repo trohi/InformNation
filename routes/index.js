@@ -12,10 +12,7 @@ router.get('/', function(req, res, next) {
 
 
 
-<<<<<<< HEAD
-=======
 router.use('/public', express.static('public'));
 router.use('/models', express.static('models'))
 
->>>>>>> mybranch
 module.exports = router;
