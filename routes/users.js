@@ -8,6 +8,7 @@ var Article = require('../models/article');
 var path = require('path');
 var controller = require('../models/controller');
 
+
 router.use(express.static(path.join(__dirname +'/public')));
 
 
@@ -23,15 +24,16 @@ router.get('/admin', controller.isLoggedIn, function (req, res, next){
 
 
 router.post('/admin',function(req, res, next){
-  
-  if(controller.value === 1){
     controller.approval(req, res, next)
-  }
-  if(controller.value === 2){
-    controller.deleteArticle(req, res, next)
-  }
-  console.log(controller.value)
+  
 res.redirect('/');
+})
+
+
+router.post('/adminDissapproval',function(req, res, next){
+  controller.deleteArticle(req, res, next)
+  
+  res.redirect('/')
 })
 
 
@@ -98,7 +100,6 @@ router.post('/signin', passport.authenticate('local.signin', {
   failureRedirect: '/user/signin',
   failureFlash: true
 }));
-
 
 
 module.exports = router;

@@ -14,8 +14,8 @@
         <i class="fa fa-user ml-1" id="userIcon" style="font-size: 1.2em; color:orange"></i> User
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/user/signup">Signup</a>
-          <a class="dropdown-item" href="/user/signin">Signin</a>
+          <a class="dropdown-item" href="/user/signup">Sign up</a>
+          <a class="dropdown-item" href="/user/signin">Sign in</a>
         </div>
       </li>
     </ul>
@@ -27,11 +27,11 @@
 </nav>
 
 
-<div  id="form">
+<div  id="form-sign-in">
       {{#if hasError}}
         <div class="alert alert-danger mb-n5" style="width: 40%; margin:auto">
             {{#each messages}}
-                <p  style="margin-left: 35%; font-size:18px;">{{this}}</p>
+                <p  style="margin-left: 40%; font-size:18px;">{{this}}</p>
              {{/each}}
         </div>
     {{/if}}

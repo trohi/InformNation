@@ -20,10 +20,10 @@
           {{else}}
           <a class="dropdown-item" href="/user/profile">Profile</a>
           {{/if}}
-          <a class="dropdown-item" href="/user/logout">Logout</a>
+          <a class="dropdown-item" href="/user/logout">Log out</a>
         {{else}}
-          <a class="dropdown-item" href="/user/signup">Signup</a>
-          <a class="dropdown-item" href="/user/signin">Signin</a>
+          <a class="dropdown-item" href="/user/signup">Sign up</a>
+          <a class="dropdown-item" href="/user/signin">Sign in</a>
          {{/if}}
         </div>
       </li>
@@ -35,7 +35,7 @@
     </form>
   </div>
 </nav>
-<div class="jumbotron  mt-1 pt-4" style="background-color: black; color:orange; height:100%; margin-bottom:0; border-radius:2%; margin-right:5px; margin-left:5px;"> 
+<div id="publish-cont" class="jumbotron  mt-1 pt-4" style="background-color: black; color:orange; height:100%; margin-bottom:0; border-radius:2%; margin-right:5px; margin-left:5px;"> 
     <form style="display:grid" action="/user/publish" method="POST">
         <label style="color:orange">Author</label>
             <input style="width:15%" type="text" value="{{user.email}}" name="author">

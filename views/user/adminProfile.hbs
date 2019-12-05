@@ -15,7 +15,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="/">Home</a>
-          <a class="dropdown-item" href="/user/logout">Logout</a>
+          <a class="dropdown-item" href="/user/logout">Log out</a>
         </div>
       </li>
     </ul>
@@ -26,7 +26,7 @@
   </div>
 </nav>
 
-<div class="container" style="background-color:black; margin-top:10px; margin-bottom:10px; color:orange; text-align:center; border-radius:2%; width:40%">
+<div class="container" id="adminProfile-cont"style="background-color:black; margin-top:10px; margin-bottom:10px; color:orange; text-align:center; border-radius:2%; width:40%">
     <h3 class="welcome pt-3">Hello {{user.email}}.</h3>
     <h3 class="wlcm pt-2">Welcome to your profile page.</h3>
     <h3 class="pt-5">You are an administrator of this website.</h3>
@@ -53,11 +53,11 @@
  <input type="hidden" name="_csrf" value="{{ csrfToken }}">
  <div id="x" onclick="clickedElement(event)" >
 
-  <button id="dis" class="btn mr-1 ml-2 mt-n5"  type="submit" style="float:left; background-color:orange;">Disapprove</button> 
-  <button id="approve" class="btn mr-1 ml-2 mt-n5"  type="submit" style="float:right; background-color:orange; color:black">Approve</button> 
+ <button name="action" value="delete" id="dis" class="btn mr-1 ml-2 mt-n5" type="submit" style="float:left; background-color:orange;" formaction="/user/adminDissapproval">Disapprove</button> 
+  <button name="action" value="update" id="approve" class="btn mr-1 ml-2 mt-n5" type="submit" style="float:right; background-color:orange; color:black">Approve</button> 
 
 </div>
 </form> 
 </div>
-  
+
   {{/each}}

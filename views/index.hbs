@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light"  style="background-color:black">
+<nav class="navbar navbar-expand-lg navbar-expand-md navbar-light"  style="background-color:black">
   <h2 class="navbar-brand" style="color:orange"><i class="fa fa-ravelry"></i> Infrom-nation</h2>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -21,32 +21,77 @@
           {{else}}
           <a class="dropdown-item" href="/user/profile">Profile</a>
           {{/if}}
-          <a class="dropdown-item" href="/user/logout">Logout</a>
+          <a class="dropdown-item" href="/user/logout">Log out</a>
         {{else}}
-          <a class="dropdown-item" href="/user/signup">Signup</a>
-          <a class="dropdown-item" href="/user/signin">Signin</a>
+          <a class="dropdown-item" href="/user/signup">Sign up</a>
+          <a class="dropdown-item" href="/user/signin">Sign in</a>
          {{/if}}
         </div>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="outline-color:orange">
-      <button class="btn btn-warning my-2 my-sm-0" style="color:black; background-color:orange"  type="submit">Search</button>
+      <input class="form-control mr-sm-2" type="search" placeholder="Search by title" aria-label="Search" id="searchBar" style="outline-color:orange" onkeyup="search()">
     </form>
   </div>
 </nav>
 
-<div style="margin-top: 20px; text-align:center;  " >
-<h3 style="font-family:'Times New Roman', Times, serif ;color:black; font-size:60px">INFORM-NATION</h3>
-<p style="font-family:'Times New Roman', Times, serif; font-size:20px">Welcome to our humble site, here you can write your story, or read others, it doesnt metter until we all feel informed.</p>
+<script>
+
+var search = function (){
+  var input = document.getElementById("searchBar")
+  var filter = input.value.toLowerCase()
+  var content = document.querySelectorAll("#tryme")
+  var title = document.querySelectorAll("#indexTitle")
+  
+  for(var i = 0; i< title.length; i++){
+    var titles = title[i].innerText
+    var titles = titles.toLowerCase()
+    if(titles.indexOf(filter) > -1){
+      content[i].style.display =""
+    }
+    else{
+      content[i].style.display = "none"
+    }
+  }
+}
+
+</script>
+
+<div  style="margin-top: 20px; text-align:center;  " >
+  <div class="title-block">
+    <div class="container ">
+
+      <div class="row">
+      <div class="col col-lg-12 col-md-10 col-sm-1 mx-2">
+
+
+<h3 style="font-family:'Times New Roman', Times, serif ;color:black; font-size:60px;">INFORM-NATION</h3>
+
+</div>
+</div>
+
+<div class="row">
+<div class="col col-lg-12 col-md-0 col-sm-0 ">
+
+<p style="font-family:'Times New Roman', Times, serif; font-size:20px; background-color:lightblue; opacity:0.4;color:black; border-radius:15%;width:90%; margin-left:auto; margin-right:auto">Welcome to our humble site, here you can write your story, or read others, it doesnt metter until we all feel informed.</p>
+
+
+</div>
+      </div>
+      
+    </div>
+
+</div>
+
+
 </div>
 
 <div class="container" id="index-cont" style="color:papayawhip; background-color:black; border-radius:2%; padding-bottom:20px; ;margin-bottom:30px">
  
    {{#each approved}} 
-   <div class="container pt-2">
+   <div class="container pt-2" id="tryme">
     <div class="col mt-5">
-  <h2 style="margin-right:auto; text-align:center; color:orange">{{ this.title }}</h2>
+  <h2 id="indexTitle" style="margin-right:auto; text-align:center; color:orange">{{ this.title }}</h2>
   <p style="color:orange;">Date: {{ this.publicationDate }}</p>
   <p style="color:orange;">Author: {{ this.author }}</p>
   </div>
@@ -54,7 +99,35 @@
     {{ this.content }}
   </div>
  
-  <hr>
+  <hr class="index-hr"> 
   </div>
    {{/each}}
 </div>
+<footer id="index-footer">
+  <address class="footer-contact">
+      <label>Developed by:</label> <p>Špago Dženan</p>
+      <hr class="contact-hr">
+      <label>Email adress:</label> <p>dzenan_95@hotmail.com</p>
+      <hr class="contact-hr">
+      <p>&copy; 2019 Inform-nation.com<p></p>
+    
+    </address>
+    <div class="footer-links"> 
+      {{#if login}}
+      {{#if user.admin}}
+    <a href="/"><i class="fa fa-home" style="font-size: 1.2em; color:orange;margin-right:10px;"></i>Home</a> 
+    <a href="/user/admin"><i class="fa fa-user ml-1" id="userIcon" style="font-size: 1.2em; color:orange;margin-right:10px;"></i> Profile</a> 
+    <a href="/user/publish"><i class="fa fa-upload" style="font-size: 1.2em; color: orange; margin-right:10px;" ></i>Publish</a>
+      {{else}}
+    <a href="/"><i class="fa fa-home" style="font-size: 1.2em; color:orange;margin-right:10px;"></i>Home</a> 
+    <a href="/user/profile"><i class="fa fa-user ml-1" id="userIcon" style="font-size: 1.2em; color:orange;margin-right:10px;"></i> Profile</a> 
+    <a href="/user/publish"><i class="fa fa-upload" style="font-size: 1.2em; color: orange; margin-right:10px;" ></i>Publish</a> 
+     
+     {{/if}}
+     {{else}}
+    <a href="/"><i class="fa fa-home" style="font-size: 1.2em; color:orange;margin-right:10px;"></i>Home</a> 
+    <a href="/user/signin"><i class="fa fa-user ml-1" id="userIcon" style="font-size: 1.2em; color:orange;margin-right:10px;"></i> Profile</a> 
+    <a href="/user/signin"><i class="fa fa-upload" style="font-size: 1.2em; color: orange; margin-right:10px;" ></i>Publish</a> 
+     {{/if}}
+     </div>
+</footer>
