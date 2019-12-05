@@ -3,6 +3,25 @@ var bcryp = require('bcrypt-nodejs');
 var User = require('../models/user');
 
 
+var search  = function(){
+  var textValue;
+  var input = document.getElementById("searchBar")
+  var filter = input.value.toUpperCase()
+  var titles = document.getElementById("indexTitle")
+  for(var i = 0; i< titles.length; i++){
+      a = titles[i][0]
+      textValue = a.textContent || a.innerText
+      if(textValue.toUpperCase().indexOf(filter) > -1){
+        titles[i].style.display = ""
+      }
+      else {
+        titles[i].style.display = "none"
+      }
+    
+  }
+}
+
+
 var isLoggedIn= function(req, res, next){
     if(req.isAuthenticated()) {
         return next()
@@ -66,25 +85,7 @@ function approval(req, res, next){
       }
     })
   }  
-
-  var value = 0;
-
-
-   function clickedElement(event){
-    if(event.target.id == "dis"){
-      value = 2
-      alert("you have clicked "+ event.target.id + " and value is " + value )
-      return value
-    }
-    if(event.target.id == "approve"){
-      value = 1
-      alert("you have clicked "+ event.target.id +" and value is " + value)
   
-      return value
-    }
-  };
-
-
   function deleteArticle(req,res,next){
       Article.findByIdAndRemove({"_id":req.body.id},function(err, result){
           if(!err){
@@ -97,12 +98,10 @@ function approval(req, res, next){
 
 
 module.exports ={
-    value: value,
     isLoggedIn: isLoggedIn,
     notLoggedIn: notLoggedIn,
     updateRecord: updateRecord,
     publish: publish,
     approval: approval,
-    deleteArticle: deleteArticle,
-    clickedElement:clickedElement,
+    deleteArticle: deleteArticle
   }
