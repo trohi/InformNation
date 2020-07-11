@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
+var CONNECTION_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/library';
 var session = require('express-session');
 var passport = require('passport');
 var flash = require('connect-flash');
@@ -17,8 +18,9 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+var PORT = process.env.PORT || 3001
 
-mongoose.connect('mongodb://localhost:27017/library', {useNewUrlParser: true})
+mongoose.connect(CONNECTION_URI, {useNewUrlParser: true})
 require('./config/passport');
 
 mongoose.set("useFindAndModify", false);
@@ -76,5 +78,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+app.listen(PORT,()=>{
+  console.log(`Server is listening on port ${PORT}`)
+})
 
 module.exports = app;
