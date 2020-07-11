@@ -100,19 +100,6 @@ opacity: 0.8;
 opacity: 0.99;
 }
 
-#contentPublishTitle{
-  padding-left:3vh;
-  padding-right:3vh;
-  border-radius:1rem;
-  background-color:rgb(70, 119, 10);
-}
-
-#contentPublishStory{
-  padding-left:3vh;
-  padding-right:3vh;
-  border-radius:1rem;
-  background-color:rgb(70, 119, 10);
-}
 
 #index-footer{
   opacity:0.95;
@@ -139,9 +126,9 @@ opacity: 0.99;
 }
 
 .footer-contact p{
-color:rgb(27, 78, 94);
-font-size: 16px;
-font-weight: bolder;
+  color:rgb(27, 78, 94);
+  font-size: 16px;
+  font-weight: bolder;
 }
 
 .footer-contact label{
@@ -169,7 +156,6 @@ font-weight: bolder;
   margin-left:30%;
 
 }
-
 
 .footer-links a{
   margin-left: 4%;
